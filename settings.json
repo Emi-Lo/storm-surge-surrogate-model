@@ -1,0 +1,20 @@
+{
+    "lat": 40.701932, 
+    "lon": -74.016228,
+    "data_path": "",
+    "output_path": "",
+    "img_path": "",
+    "train_files_shuffle": 0,
+    "LSTM_recurrent_steps": 6,
+    "ms_recurrent_steps": 6,
+    "train_y_bounds": [1979, 2018],
+    "train_month_start_end": [2,12],
+    "lat_bounds":[40.72, 40.5],
+    "lon_bounds":[-74.15, -73.90],
+    "output_type": 1,
+    "model_type": "conv",
+    "preprocess": "standardize",
+    "kfold": 1,
+    "folds_number": 5,
+    "loss_type": "mse"
+  }
