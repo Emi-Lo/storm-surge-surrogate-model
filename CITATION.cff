@@ -1,0 +1,11 @@
+cff-version: v1.0
+message: "If you use this software, please cite it as below."
+title: "A Deep Learning Framework for Extreme Storm Surge Modelling Under Future Climate Scenarios"
+authors:
+  - family-names: "Longo"
+    given-names: "Emiliano"
+version: "1.0.0"
+doi: "10.5281/zenodo.16748614"
+date-released: "2025-08-05"
+url: "https://github.com/Emi-Lo/storm-surge-surrogate-model"
+license: "MIT"
