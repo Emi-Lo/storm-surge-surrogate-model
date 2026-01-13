@@ -455,28 +455,6 @@ def reshape_for_convlstm(data, n_steps):
 
 def build_dense_model(input_shape, output_shape,learning_rate,elastic_lambda,loss_name):
     
-    # # Build the neural network layer by layer
-    # input_layer = tfkl.Input(shape=input_shape, name='input_layer')
-    # flatten_layer = tfkl.Flatten()(input_layer)
-    # hidden_layer3 = tfkl.Dense(units=256, activation='leaky_relu' ,kernel_regularizer=tfk.regularizers.L1L2(elastic_lambda), name='Hidden0')(flatten_layer)   
-    # dropout = tfkl.Dropout(0.1)(hidden_layer3)  
-    # hidden_layer3 = tfkl.Dense(units=128, activation='leaky_relu' ,kernel_regularizer=tfk.regularizers.L1L2(elastic_lambda), name='Hidden1')(dropout)   
-    # dropout = tfkl.Dropout(0.05)(hidden_layer3)  
-    # hidden_layer3 = tfkl.Dense(units=64, activation='leaky_relu' ,kernel_regularizer=tfk.regularizers.L1L2(elastic_lambda), name='Hidden2')(dropout)  
-    # hidden_layer3 = tfkl.Dense(units=32, activation='leaky_relu' ,kernel_regularizer=tfk.regularizers.L1L2(elastic_lambda), name='Hidden3')(hidden_layer3)  
-    # output_layer = tfkl.Dense(units=output_shape[0], activation='leaky_relu', name='output')(hidden_layer3)         
-
-    # # Connect input and output through the Model class
-    # model = tfk.Model(inputs=input_layer, outputs=output_layer, name='model')
-
-    # # Compile the model
-    # optimizer = tfk.optimizers.Adam(learning_rate=learning_rate)
-    # model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
-
-    # # Return the model
-    # return model
-
-    
     # Build the neural network layer by layer
     input_layer = tfkl.Input(shape=input_shape, name='input_layer')
     flatten_layer = tfkl.Flatten()(input_layer)
@@ -493,9 +471,12 @@ def build_dense_model(input_shape, output_shape,learning_rate,elastic_lambda,los
     optimizer = tfk.optimizers.Adam(learning_rate=learning_rate)
     if loss_name == "mse":
         model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
-    if loss_name == "mcql":
-        model.compile(loss=cl.monotone_composite_quantile_loss, optimizer=optimizer, metrics=['mse'])
- 
+    if loss_name == "QL":
+        model.compile(loss=cl.quantile_loss, optimizer=optimizer, metrics=cl.quantile_loss)
+    if loss_name == "EL":
+        model.compile(loss=cl.expectile_loss, optimizer=optimizer, metrics=cl.expectile_loss)
+    if loss_name == "WQE":
+        model.compile(loss=cl.weighted_quantile_expectile, optimizer=optimizer, metrics=cl.weighted_quantile_expectile)
 
     # Return the model
     return model
@@ -575,8 +556,12 @@ def build_CONV_model(input_shape, output_shape,learning_rate,elastic_lambda,seed
 
     if loss_name == "mse":
         model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
-    if loss_name == "mcql":
-        model.compile(loss=cl.monotone_composite_quantile_loss, optimizer=optimizer, metrics=['mse'])
+    if loss_name == "QL":
+        model.compile(loss=cl.quantile_loss, optimizer=optimizer, metrics=cl.quantile_loss)
+    if loss_name == "EL":
+        model.compile(loss=cl.expectile_loss, optimizer=optimizer, metrics=cl.expectile_loss)
+    if loss_name == "WQE":
+        model.compile(loss=cl.weighted_quantile_expectile, optimizer=optimizer, metrics=cl.weighted_quantile_expectile)
 
     # Return the model
     return model
@@ -620,8 +605,12 @@ def build_LSTM_model(input_shape, output_shape,learning_rate,elastic_lambda,seed
 
     if loss_name == "mse":
         model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
-    if loss_name == "mcql":
-        model.compile(loss=cl.monotone_composite_quantile_loss, optimizer=optimizer, metrics=['mse'])
+    if loss_name == "QL":
+        model.compile(loss=cl.quantile_loss, optimizer=optimizer, metrics=cl.quantile_loss)
+    if loss_name == "EL":
+        model.compile(loss=cl.expectile_loss, optimizer=optimizer, metrics=cl.expectile_loss)
+    if loss_name == "WQE":
+        model.compile(loss=cl.weighted_quantile_expectile, optimizer=optimizer, metrics=cl.weighted_quantile_expectile)
  
 
     # Return the model
@@ -675,7 +664,15 @@ def build_Conv3D_model(input_shape, output_shape,learning_rate,elastic_lambda,se
 
     # Compile the model
     optimizer = tfk.optimizers.Adam(learning_rate=learning_rate)
-    model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
+    if loss_name == "mse":
+        model.compile(loss=tfk.losses.MeanSquaredError(), optimizer=optimizer, metrics=['mse'])
+    if loss_name == "QL":
+        model.compile(loss=cl.quantile_loss, optimizer=optimizer, metrics=cl.quantile_loss)
+    if loss_name == "EL":
+        model.compile(loss=cl.expectile_loss, optimizer=optimizer, metrics=cl.expectile_loss)
+    if loss_name == "WQE":
+        model.compile(loss=cl.weighted_quantile_expectile, optimizer=optimizer, metrics=cl.weighted_quantile_expectile)
+ 
 
     # Return the model
     return model
